@@ -1,0 +1,17 @@
+@use "../scss/variable" as *;
+.header {
+  background-color: $primary;
+  display: flex;
+  gap: 30px;
+  padding: 1rem 0 0 2rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.active {
+  background-color: #ffffff;
+  color: $primary;
+  padding: 3px 35px;
+  border-radius: 5px 5px 0 0;
+  margin: 0;
+}

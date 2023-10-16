@@ -1,0 +1,41 @@
+@use "../scss/variable" as *;
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap");
+
+.task {
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-family: "Raleway";
+  font-size: 25px;
+  width: 685px;
+
+  span {
+    width: 300px;
+  }
+  input[type="checkbox"] {
+    height: 15px;
+    width: 65px;
+    background: transparent;
+  }
+
+  &__icons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 320px;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+  .btn-edit {
+    cursor: pointer;
+  }
+  .btn-trash {
+    width: 12px;
+    margin-top: 2px;
+    cursor: pointer;
+  }
+}

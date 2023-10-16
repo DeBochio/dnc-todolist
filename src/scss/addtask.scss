@@ -1,0 +1,29 @@
+@use "../scss/variable" as *;
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600&display=swap");
+
+form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 350px;
+}
+input {
+  width: 600px;
+  padding: 6px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-family: "Raleway";
+  font-style: italic;
+  font-size: 25px;
+}
+
+button {
+  background-color: transparent;
+  font-size: 38px;
+  border: none;
+  padding: 8px;
+  width: 80px;
+  color: #ffffff;
+  cursor: pointer;
+}
