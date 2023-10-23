@@ -1,33 +1,39 @@
 import { useState } from "react";
 import "../scss/task.scss";
 import { FaRegEdit, FaTrash } from "react-icons/fa";
+import { ACTIONS } from "../App";
 
-import { useNavigate } from "react-router-dom";
+export default function Task({ id, title, completed = "", dispatch }) {
+  const [checked, setCheked] = useState(completed);
 
-export function Task({ id, task, status }) {
-  const [checked, setCheked] = useState(status);
-  const navigate = useNavigate();
+  function handleChange() {
+    dispatch({ type: ACTIONS.TOGGLED_TODO, payload: { id: id } });
+    setCheked(!checked);
+  }
+
   return (
     <div className="task">
-      <span>{task}</span>
+      <span
+        style={{
+          color: completed ? "#AAA" : "#FFF",
+          textDecoration: completed && "line-through",
+        }}
+      >
+        {title}
+      </span>
       <input
         type="checkbox"
         checked={checked}
-        onChange={() => setCheked(!checked)}
+        onChange={() => handleChange()}
       />
       <div className="task__icons">
-        <FaRegEdit
-          className="btn-edit"
-          onClick={() => {
-            navigate("confirm", { state: { id, task, type: "edit" } });
-          }}
-        />
+        <FaRegEdit className="btn-edit" />
 
         <FaTrash
           className="btn-trash"
-          onClick={() => {
-            navigate("confirm", { state: { id, task, type: "delet" } });
-          }}
+          onClick={() =>
+            dispatch({ type: ACTIONS.DELETE_TODO, payload: { id: id } })
+          }
         />
       </div>
     </div>
