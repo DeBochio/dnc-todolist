@@ -9,6 +9,7 @@ export default function Task({
   title,
   completed = "",
   dispatch,
+  handleDelete,
 }) {
   const [checked, setCheked] = useState(completed);
 
@@ -35,12 +36,7 @@ export default function Task({
       <div className="task__icons">
         <FaRegEdit className="btn-edit" onClick={() => handleEdit(title, id)} />
 
-        <FaTrash
-          className="btn-trash"
-          onClick={() =>
-            dispatch({ type: ACTIONS.DELETE_TODO, payload: { id: id } })
-          }
-        />
+        <FaTrash className="btn-trash" onClick={() => handleDelete(id)} />
       </div>
     </div>
   );

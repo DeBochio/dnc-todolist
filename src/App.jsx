@@ -1,5 +1,6 @@
 import "./scss/app.scss";
 import { Header } from "./Header";
+import Confirm from "./Components/Confirm";
 import Task from "./Components/Task";
 import Addtasks from "./Components/Addtasks";
 import { DB } from "./mock/todolist";
@@ -43,6 +44,7 @@ function App() {
   const [todos, dispatch] = useReducer(reducer, DB);
   const [name, setName] = useState("");
   const [id, setId] = useState("");
+  const [operation, setOperation] = useState("");
   const inputAdd = useRef();
 
   function handleSubmit(e) {
@@ -52,14 +54,18 @@ function App() {
       setName("");
     } else if (id) {
       e.preventDefault();
-      dispatch({ type: ACTIONS.EDIT_TODO, payload: { id: id, name: name } });
-      setName("");
+      setOperation("Edit");
     }
   }
 
   function handleEdit(title, id) {
     setName(title);
     inputAdd.current.focus();
+    setId(id);
+  }
+
+  function handleDelete(id) {
+    setOperation("Delete");
     setId(id);
   }
 
@@ -85,6 +91,7 @@ function App() {
                 dispatch={dispatch}
                 setName={setName}
                 handleEdit={handleEdit}
+                handleDelete={handleDelete}
               />
             );
           })}
@@ -94,9 +101,21 @@ function App() {
             setName={setName}
             name={name}
             id={id}
+            setId={setId}
           />
         </div>
       </div>
+      {operation && (
+        <Confirm
+          operation={operation}
+          setOperation={setOperation}
+          dispatch={dispatch}
+          setName={setName}
+          setId={setId}
+          name={name}
+          id={id}
+        />
+      )}
     </>
   );
 }
