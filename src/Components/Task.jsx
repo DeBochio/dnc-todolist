@@ -3,7 +3,13 @@ import "../scss/task.scss";
 import { FaRegEdit, FaTrash } from "react-icons/fa";
 import { ACTIONS } from "../App";
 
-export default function Task({ id, title, completed = "", dispatch }) {
+export default function Task({
+  handleEdit,
+  id,
+  title,
+  completed = "",
+  dispatch,
+}) {
   const [checked, setCheked] = useState(completed);
 
   function handleChange() {
@@ -27,7 +33,7 @@ export default function Task({ id, title, completed = "", dispatch }) {
         onChange={() => handleChange()}
       />
       <div className="task__icons">
-        <FaRegEdit className="btn-edit" />
+        <FaRegEdit className="btn-edit" onClick={() => handleEdit(title, id)} />
 
         <FaTrash
           className="btn-trash"

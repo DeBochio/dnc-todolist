@@ -3,12 +3,13 @@ import { Header } from "./Header";
 import Task from "./Components/Task";
 import Addtasks from "./Components/Addtasks";
 import { DB } from "./mock/todolist";
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useRef } from "react";
 
 export const ACTIONS = {
   ADD_TODO: "add-todo",
   TOGGLED_TODO: "toglle-todo",
   DELETE_TODO: "delete-todo",
+  EDIT_TODO: "edit-todo",
 };
 
 function reducer(todos, action) {
@@ -24,6 +25,13 @@ function reducer(todos, action) {
       });
     case ACTIONS.DELETE_TODO:
       return todos.filter((todo) => todo.id !== action.payload.id);
+    case ACTIONS.EDIT_TODO:
+      return todos.map((todo) => {
+        if (todo.id === action.payload.id) {
+          return { ...todo, title: action.payload.name, completed: false };
+        }
+        return todo;
+      });
   }
 }
 
@@ -34,14 +42,27 @@ function newTodo(name) {
 function App() {
   const [todos, dispatch] = useReducer(reducer, DB);
   const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const inputAdd = useRef();
 
   function handleSubmit(e) {
-    e.preventDefault();
-    dispatch({ type: ACTIONS.ADD_TODO, payload: { name: name } });
-    setName("");
+    if (id === "") {
+      e.preventDefault();
+      dispatch({ type: ACTIONS.ADD_TODO, payload: { name: name } });
+      setName("");
+    } else if (id) {
+      e.preventDefault();
+      dispatch({ type: ACTIONS.EDIT_TODO, payload: { id: id, name: name } });
+      setName("");
+    }
   }
 
-  console.log(todos);
+  function handleEdit(title, id) {
+    setName(title);
+    inputAdd.current.focus();
+    setId(id);
+  }
+
   return (
     <>
       <Header />
@@ -62,10 +83,18 @@ function App() {
                 title={todo.title}
                 completed={todo.completed}
                 dispatch={dispatch}
+                setName={setName}
+                handleEdit={handleEdit}
               />
             );
           })}
-          <Addtasks handleSubmit={handleSubmit} setName={setName} name={name} />
+          <Addtasks
+            inputAdd={inputAdd}
+            handleSubmit={handleSubmit}
+            setName={setName}
+            name={name}
+            id={id}
+          />
         </div>
       </div>
     </>

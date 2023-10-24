@@ -1,15 +1,22 @@
 import "../scss/addtask.scss";
-import React, { useState } from "react";
 
-export default function Addtasks({ handleSubmit, setName, name }) {
+export default function Addtasks({
+  handleSubmit,
+  setName,
+  name,
+  inputAdd,
+  id,
+}) {
   return (
     <form onSubmit={handleSubmit}>
       <input
+        ref={inputAdd}
         autoFocus
         type="text"
         onChange={(e) => {
           setName(e.target.value);
         }}
+        key={id}
         value={name}
         placeholder="Nova tarefa..."
       />
